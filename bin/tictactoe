@@ -1,3 +1,40 @@
 #!/usr/bin/env ruby
 
 require_relative '../config/environment'
+
+input = nil
+
+
+
+while input == nil
+
+  puts "Welcome to Tic-tac-toe!"
+  puts "Enter 1 to play a single game."
+  puts "Enter 2 to play 100 computer vs. computer games."
+  puts "Enter Q to quit now."
+
+  input = gets.chomp
+
+  if input == "1"
+    game = Game.new
+    game.start
+  elsif input == "2"
+    game_array = []
+    100.times do
+      game = Game.new
+      game.player_1 = Players::Computer.new("X")
+      game.player_2 = Players::Computer.new("O")
+      result = game.play_multiple
+      game_array << result
+    end
+    puts "The result of the 100 games is:"
+    puts "X won #{game_array.count("Congratulations X!")} times."
+    puts "O won #{game_array.count("Congratulations O!")} times."
+    puts "They tied #{game_array.count("Cat's Game!")} times."
+  elsif input.downcase == "q"
+  puts "Goodbye!"
+  else
+    puts "invalid selection"
+    input = nil
+  end
+end
